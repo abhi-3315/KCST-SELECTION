@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kirloskar Chiller Selection</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="sidebar">
+    <img src="chillers_logo.png" alt="Kirloskar Logo">
+
+    <!-- ================================================================ -->
+    <!-- ORIGINAL SIDEBAR CALCULATOR FORM (KEPT AS REQUESTED)             -->
+    <!-- ================================================================ -->
+    <label for="typeSeries">Type of Series:</label>
+    <select id="typeSeries" onchange="showSeriesOptions()">
+      <option value="">-- Select --</option>
+      <option value="air">Air Cooled Chiller</option>
+      <option value="water">Water Cooled Chiller</option>
+    </select>
+    <div id="seriesOptions">
+      <!-- Subtype select will be populated here -->
+    </div>
+
+    <hr class="sidebar-divider">
+
+    <!-- ================================================================ -->
+    <!-- NEW PDF MENU ADDED BELOW THE CALCULATOR FORM                     -->
+    <!-- ================================================================ -->
+    <div class="sidebar-menu-header">Technical Documents</div>
+    <ul id="tdsMenu" class="sidebar-menu">
+      <li class="menu-parent">
+        <a href="#">R134a</a>
+        <ul class="hidden">
+          <li><a href="#" class="menu-leaf" data-pdf-link="KCM-R134a.pdf">KCM-R134a</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="kwe r134a.pdf">KWE-R134a</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="KWI-R134a.pdf">KWI-R134a</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="KWK-R134a.pdf">KWK-R134a</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="KWS-R134a.pdf">KWS-R134a</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="kaar134a.pdf">KAA-R134a</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="KAS134a.pdf">KAS-R134a</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="KSC-R134a-01.pdf">KSC-R134a-01</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="KSC-R134a-02.pdf">KSC-R134a-02</a></li>
+        </ul>
+      </li>
+      <li class="menu-parent">
+        <a href="#">R407C</a>
+        <ul class="hidden">
+          <li><a href="#" class="menu-leaf" data-pdf-link="KWS-R407C.pdf">KWS-R407C</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="kasr407c.pdf">KAS-R407C</a></li>
+          <li><a href="#" class="menu-leaf" data-pdf-link="KAA-R407C.pdf">KAA-R407C</a></li>
+        </ul>
+      </li>
+      <li class="menu-parent">
+        <a href="#">R1234Ze</a>
+        <ul class="hidden">
+           <li><a href="#" class="menu-leaf" data-pdf-link="KWI-R1234Ze.pdf">KWI-R1234Ze</a></li>
+        </ul>
+      </li>
+      <li><a href="#" class="menu-leaf" data-pdf-link="moc.pdf">MOC</a></li>
+    </ul>
+    <!-- End of New Menu -->
+  </div>
+
+  <div class="main-content-wrapper">
+    <div class="main">
+      <!-- The main calculator form remains here, now driven by the sidebar -->
+      <div class="row">
+        <div class="column">
+          <label for="seriesModel">Compressor Family:</label>
+          <select id="seriesModel" onchange="showModelOptions()">
+            <option value="">-- Select Subtype First --</option>
+          </select>
+        </div>
+        <div class="column">
+          <label for="compressorSelection">Compressor Model:</label>
+          <select id="compressorSelection">
+            <option value="">-- Select Compressor Family First --</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <label for="refrigerant">Refrigerant:</label>
+          <select id="refrigerant">
+            <option value="">-- Select --</option>
+            <option value="R513A">R513A</option>
+            <option value="R134a">R134a</option>
+            <option value="R1234Ze">R1234Ze</option> 
+            <option value="R407C">R407C</option>
+          </select>
+        </div>
+        <div class="column">
+          <label for="powerSupply">Power Supply:</label>
+          <select id="powerSupply">
+            <option value="">-- Select --</option>
+            <option value="50Hz/415V">50Hz/415V</option>
+            <option value="60Hz/460V">60Hz/460V</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <label for="evaporatorLWT">Evaporator - Leaving Water Temperature (°C):</label>
+          <input type="number" id="evaporatorLWT" placeholder="enter the value" onblur="checkEvapTemp(this)">
+        </div>
+        <div class="column">
+          <label for="condenserLWT" id="condenserLabel">Condenser - Leaving Water Temperature. (°C):</label>
+          <input type="number" id="condenserLWT" placeholder="enter the value">
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <label for="desuperheater">DE Super Heater:</label>
+          <select id="desuperheater">
+            <option value="">-- Select --</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="column"></div>
+      </div>
+      <div class="action-buttons">
+        <button id="calculateButton" onclick="submitFormAndDisplayResults()">Calculate</button>
+        <button id="confirmDownloadButton" onclick="generateAndDownloadPDF()" style="display:none;">Confirm & Download PDF</button>
+      </div>
+      <div id="resultsDisplayContainer" class="results-container" style="display:none;">
+        <h2>Calculation Results</h2>
+        <div id="resultsContent"></div>
+      </div>
+      <div id="technicalDataDisplay" class="results-container" style="display:none;"></div>
+    </div>
+  </div>
+  <script src="script.js"></script> 
+</body>
+</html>

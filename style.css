@@ -1,0 +1,307 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f6; /* Light neutral background */
+  color: #333;
+  display: flex;
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+.sidebar {
+  width: 280px;
+  background: linear-gradient(to bottom, #c7a3a3, #03e2ff); /* Kirloskar-like blue gradient */
+  color: #c72222; /* Text color changed to white for better contrast on gradient */
+  padding: 25px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar img {
+  width: 80%;
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto 30px auto;
+}
+
+.sidebar label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.95em;
+  color: #f0f0f0; /* Lighter text color for labels in sidebar */
+}
+.sidebar select,
+.sidebar #seriesOptions select /* Target dynamically added select */
+{
+  display: block;
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #bbb; /* Slightly darker border for selects */
+  background-color: #fff;
+  color: #333;
+  font-size: 0.9em;
+}
+.sidebar #seriesOptions { /* Style the container for the dynamic select */
+    margin-top: -10px; /* Adjust if label and select are too far apart */
+}
+.sidebar #seriesOptions label { /* Specifically target label inside seriesOptions if needed */
+    color: #f0f0f0; /* Ensure consistency */
+}
+
+
+.main-content-wrapper {
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto; /* Allow scrolling if content is too long */
+}
+
+.main {
+  max-width: 900px; /* Limit width for better readability */
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.row {
+  display: flex;
+  gap: 25px; /* Space between columns */
+  margin-bottom: 25px;
+}
+
+.column {
+  flex: 1;
+}
+
+.column label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.column select,
+.column input[type="text"],
+.column input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 0.95em;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.column select:focus,
+.column input[type="text"]:focus,
+.column input[type="number"]:focus {
+  border-color: #007bff; /* Highlight on focus */
+  outline: none;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.action-buttons button {
+  background-color: #007bff; /* Primary button color */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+  min-width: 120px; /* Ensure buttons have a decent size */
+}
+
+.action-buttons button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+#confirmDownloadButton {
+  background-color: #28a745; /* Green for confirmation */
+}
+#confirmDownloadButton:hover {
+  background-color: #1e7e34;
+}
+
+
+/* Results Display Area */
+.results-container {
+  margin-top: 40px;
+  padding: 25px;
+  background-color: #f9f9f9; /* Slightly different background for results */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.results-container h2 {
+  margin-top: 0;
+  color: #00529b; /* Kirloskar blue for heading, was aab7b8 */
+  border-bottom: 2px solid #00529b;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#resultsContent table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#resultsContent th, /* Table headers not used in current JS display */
+#resultsContent td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 0.95em;
+}
+
+#resultsContent td:first-child { /* Label column */
+  font-weight: 600; /* Bolder labels */
+  color: #333; /* Darker label color */
+  width: 45%; /* Give more space to labels */
+}
+#resultsContent td:last-child { /* Value column */
+  color: #555;
+}
+
+
+#resultsContent .section-header {
+  background-color: #e9ecef;
+  font-weight: bold;
+  padding-top: 12px !important; 
+  padding-bottom: 8px !important;
+  text-align: left !important; 
+  color: #00529b; 
+  font-size: 1.05em; /* Slightly larger section headers */
+}
+
+#resultsContent .status-good {
+    color: #28a745; /* Green */
+    font-weight: bold;
+}
+#resultsContent .status-bad {
+    color: #dc3545; /* Red */
+    font-weight: bold;
+}
+#resultsContent .message-warning { /* For motor notes that ARE strong warnings */
+    color: #ffc107; /* Amber/Orange */
+    font-weight: bold;
+}
+#resultsContent .message-note { /* For motor notes that are not strong warnings */
+    color: #17a2b8; /* Info blue/cyan */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .main-content-wrapper {
+    padding: 15px;
+  }
+  .main {
+    padding: 20px;
+  }
+  .row {
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  .action-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .action-buttons button {
+    width: 100%;
+  }
+}
+/* ADD THESE STYLES TO YOUR EXISTING CSS FILE */
+
+.sidebar-divider {
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.sidebar-menu-header {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu ul {
+  list-style-type: none;
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.sidebar-menu a {
+  display: block;
+  padding: 8px 10px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.sidebar-menu a:hover {
+  background-color: #e9e9e9;
+}
+
+/* Style for parent menu items */
+.menu-parent > a {
+  font-weight: bold;
+  position: relative;
+}
+
+/* Arrow icon for expandable menus */
+.menu-parent > a::before {
+  content: '►'; /* Right-pointing arrow */
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 0.7em;
+  transition: transform 0.2s;
+}
+
+/* Change arrow when menu is open */
+.menu-parent.open > a::before {
+  transform: rotate(90deg); /* Down-pointing arrow */
+}
+
+/* Initially hide sub-menus */
+.hidden {
+  display: none;
+}
